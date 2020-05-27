@@ -10,13 +10,13 @@ import pprint as pp
 
 def main():
     #This is the route to the original source file being processed
-    odmfilepath = 'C:\\Users\\gwilliams\\Desktop\\Python Experiments\\work projects\\ODM_Dimensions\\ODMsourcedata\\2017\\Draft_ODM\\'
+    odmfilepath = 'C:\\Users\\gwilliams\\Desktop\\Python Experiments\\work projects\\ODM_Dimensions\\ODMsourcedata\\2019\\'
     #This is the name of the source file which is going to be processed.
-    odmfilename = 'ODM_2017_2018_v3.csv'
+    odmfilename = 'Final_ODM_201819_v4.csv'
 
     odmoutputpath = 'C:\\Users\\gwilliams\\Desktop\\Python Experiments\\work projects\\ODM_Dimensions\\ODMoutput\\'
-    odmfileoutputname = 'odm_dimensions_2017_final.xlsx'
-    odmfileoutputsourcefile = '309_ODMCH7_201718_v3_nonan.csv'
+    odmfileoutputname = 'odm_dimensions_201819_v4.xlsx'
+    odmfileoutputsourcefile = '309_ODMCH7_201718_v4_nonan.csv'
 
     dtypedict = {
         'Mode':'category',
@@ -104,10 +104,10 @@ def main():
 
     print("The distict values for route are \n")
     
-    route = odm_revised_nonan[['Route','routedesc']].drop_duplicates()
+    #route = odm_revised_nonan[['Route','routedesc']].drop_duplicates()
     #initial name in 2019
-    #route = odm[['Route','Route Description']].drop_duplicates()
-    #print(route)
+    route = odm[['Route','Route Description']].drop_duplicates()
+    print(route)
     
 
     
@@ -118,7 +118,7 @@ def main():
     print("getting aggregated checksums")
     #get DW data
     print("getting DW data")
-    dwloadeddata = getDWdata('ORR','factt_309_odm_ch7',8302)
+    dwloadeddata = getDWdata('ORR','factt_309_odm_ch7',9430)
 
     print("getting aggregated checksums")
     
@@ -130,6 +130,8 @@ def main():
     print("getting DW NUTS aggregation")
     dwnutsaggresult = dwloadeddata.groupby(['origNUTS2_Code','destNUTS2_Code']).agg({'Dist':'sum','mall':'sum','rall':'sum','jall':'sum'})
 
+    
+
     #aggregate source by Region
     print("getting source regions aggregation")
     sourceregionaggresult = odm_revised_nonan.groupby(['OrigRegion','DestRegion']).agg({'Dist':'sum','mall':'sum','r_all':'sum','j_all':'sum'})
@@ -138,6 +140,8 @@ def main():
     print("getting source regions aggregation")
     sourcenutsaggresult = odm_revised_nonan.groupby(['OrigNUTS2_Code','DestNUTS2_Code']).agg({'Dist':'sum','mall':'sum','r_all':'sum','j_all':'sum'})
 
+    #checknuts = dwnutsaggresult - sourcenutsaggresult
+    #checkregion = dwregionaggresult - sourceregionaggresult
 
 
     print(f"Exporting odm dimension info to {odmoutputpath} as {odmfileoutputname}")
@@ -149,11 +153,13 @@ def main():
         summary.to_excel(writer,sheet_name='summary_data_for_QA')
         
         sourceregionaggresult.to_excel(writer,sheet_name='region checksum from source')
-        sourcenutsaggresult.to_excel(writer,sheet_name='nuts checksum from source')
-        
         dwregionaggresult.to_excel(writer,sheet_name='region checksum from DW')
-        dwnutsaggresult.to_excel(writer,sheet_name='nuts checksum from DW')
+        #checkregion.to_excel(writer,sheet_name='region check')
 
+
+        sourcenutsaggresult.to_excel(writer,sheet_name='nuts checksum from source')
+        dwnutsaggresult.to_excel(writer,sheet_name='nuts checksum from DW')
+        #checknuts.to_excel(writer,sheet_name= 'nuts check')
 
         writer.save()
 

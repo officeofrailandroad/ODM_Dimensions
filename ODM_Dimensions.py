@@ -9,12 +9,17 @@ import pprint as pp
 
 
 def main():
+    """
+    Once project has been successfully run, remove the source file from the /source_data folder as
+    the source file exceeds 100MB which prevents the project from being pushed to GitHub
+
+    """
     #This is the route to the original source file being processed
-    odmfilepath = 'C:\\Users\\gwilliams\\Desktop\\Python Experiments\\work projects\\ODM_Dimensions\\ODMsourcedata\\2019\\'
+    odmfilepath = 'source_data\\'
     #This is the name of the source file which is going to be processed.
     odmfilename = 'Final_ODM_201819_v4.csv'
 
-    odmoutputpath = 'C:\\Users\\gwilliams\\Desktop\\Python Experiments\\work projects\\ODM_Dimensions\\ODMoutput\\'
+    odmoutputpath = 'output\\'
     odmfileoutputname = 'odm_dimensions_201819_v4.xlsx'
     odmfileoutputsourcefile = '309_ODMCH7_201718_v4_nonan.csv'
 
@@ -117,7 +122,8 @@ def main():
 
     print("getting aggregated checksums")
     #get DW data
-    print("getting DW data")
+    print("getting DW data.  This is rather slow, with a loading time of 15-25 minutes. /n Please be patient.  Perhaps go and have a nice cup of tea?")
+    #change the source_item_id to match the previous year you want to compare against.
     dwloadeddata = getDWdata('ORR','factt_309_odm_ch7',9430)
 
     print("getting aggregated checksums")

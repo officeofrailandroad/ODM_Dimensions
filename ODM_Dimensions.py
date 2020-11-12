@@ -207,7 +207,7 @@ def fudgeTheData(df, fy):
     This applies a series of changes to the source file to enable loading of the data using the ETL package
     Add financial year column
     Renames "m_all" to "mall"
-    Puts 0 in tlag column where flag is NULL or negative and converts to integer.
+    Puts 0 in flag column where flag is NULL or negative and converts to integer.
 
     Parameters:
     df:     This is a dataframe holding the ODM data.

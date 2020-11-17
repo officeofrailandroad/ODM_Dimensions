@@ -1,0 +1,23 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.271
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "ODM_Dimensions", "ODM_Dimensions\ODM_Dimensions.pyproj", "{26299E10-1EE8-4F9F-A00C-3AA12605320A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{26299E10-1EE8-4F9F-A00C-3AA12605320A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{26299E10-1EE8-4F9F-A00C-3AA12605320A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {77296A05-8851-4527-A8F0-2B21C15C151D}
+	EndGlobalSection
+EndGlobal

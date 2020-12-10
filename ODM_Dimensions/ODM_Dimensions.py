@@ -17,15 +17,16 @@ def main():
     #This is the route to the original source file being processed
     odmfilepath = 'source_data\\'
     #This is the name of the source file which is going to be processed.
-    odmfilename = 'Final_ODM_201819_v4.csv'
+    odmfilename = '309_ODMCH7_201920_v1.csv'
 
     odmoutputpath = 'output\\'
-    odmfileoutputname = 'odm_dimensions_201819_v4.xlsx'
-    odmfileoutputsourcefile = '309_ODMCH7_201718_v4_nonan.csv'
+    odmfileoutputname = 'odm_dimensions_201920_v1.xlsx'
+    odmfileoutputsourcefile = '309_ODMCH7_201920_v1_nonan.csv'
 
     dtypedict = {
         'Mode':'category',
         'Orig':'category',
+        'Group_orig_code':'category',
 		'Group_orig':'category',
         'Dest':'category',
         'Group_dest_code':'category',
@@ -75,8 +76,6 @@ def main():
         'DestNUTS2_Code':'category',
         'DestNUTS2_Desc':'category',
         'routedesc':'category'
-        #initial name supplied in 2019
-        #'Route Description':'category'
 
         
         }
@@ -85,7 +84,7 @@ def main():
     odm = pd.read_csv(odmfilepath + odmfilename,dtype= dtypedict)
 
     # fudge the data
-    odm_revised = fudgeTheData(odm, 20172018)
+    odm_revised = fudgeTheData(odm, 20192020)
 
     #replace na value
     odm_revised_nonan = nonan(odm_revised)
@@ -103,20 +102,20 @@ def main():
     mode = odm_revised_nonan['Mode'].drop_duplicates()
     print(mode)
 
-    print("The distict values for NUTS 2 are \n")
+    print("The distinct values for NUTS 2 are \n")
     NUTS2 = odm_revised_nonan[['DestNUTS2_Code','DestNUTS2_Desc']].drop_duplicates()
     print(NUTS2)
 
-    print("The distict values for route are \n")
+    print("The distinct values for route are \n")
     
     #route = odm_revised_nonan[['Route','routedesc']].drop_duplicates()
     #initial name in 2019
-    route = odm[['Route','Route Description']].drop_duplicates()
+    route = odm[['Route','routedesc']].drop_duplicates()
     print(route)
     
 
     
-    print("The distict values for station are \n")
+    print("The distinct values for station are \n")
     station = odm_revised_nonan[['Orig','OrigName','OrigRegion','OrigCounty','OrigDistrict','OrigNUTS2_Code','OrigNUTS2_Desc']].drop_duplicates()
     print(station)
 
@@ -124,7 +123,7 @@ def main():
     #get DW data
     print("getting DW data.  This is rather slow, with a loading time of 15-25 minutes. /n Please be patient.  Perhaps go and have a nice cup of tea?")
     #change the source_item_id to match the previous year you want to compare against.
-    dwloadeddata = getDWdata('ORR','factt_309_odm_ch7',9430)
+    dwloadeddata = getDWdata('ORR','factt_309_odm_ch7',9872)
 
     print("getting aggregated checksums")
     
